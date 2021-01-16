@@ -10,41 +10,50 @@ import Input from './Input';
 import Icon from './icon';
 import * as authActions from "../../redux/actions/authActions";
 
+const initialState = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    confirmPassword: ''
+}
+
 const Auth = () => {
 
     const classes = useStyles();
+    
     const [showPassword, setShowPassword] = useState(false);
     const [isSignUp, setInSignUp] = useState(false);
+    const [formData, setFormData] = useState(initialState)
+
     const dispatch = useDispatch()
     const history = useHistory();
 
     const handleShowPassword = () => setShowPassword((prevShowPassword) => !prevShowPassword);
 
-    const handleSubmit = () => {
-
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        
+        if(isSignUp) {
+            dispatch(authActions.signUp(formData, history));
+        } else {
+            dispatch(authActions.signIn(formData, history));
+        }
     }
 
-    const handleChange = () => {
-
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
     }
 
     const switchMode = () => {
         setInSignUp((prevIsSignUp) => !prevIsSignUp);
-        handleShowPassword(false);
+        setShowPassword(false);
     }
 
     const googleSuccess = async (res) => {
         const result = res?.profileObj;
         const token = res?.tokenId;
-        dispatch(authActions.googleSignIn(result, token));
-        history.push('/');
-
-        // try {
-        //     dispatch({ type: "AUTH", data: { result, token } });
-        //     history.push('/');
-        // } catch (error) {
-        //     console.log(error);
-        // }
+        dispatch(authActions.googleSignIn(result, token, history));
     }
 
     const googleFailure = (error) => {

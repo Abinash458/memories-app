@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API = axios.create({ baseURL: 'http://localhost:5000' });
+const API = axios.create({ baseURL: 'https://git.heroku.com/abinash-memories-app.git' });
 
 API.interceptors.request.use((req) => {
     if(localStorage.getItem('profile')) {
@@ -10,7 +10,7 @@ API.interceptors.request.use((req) => {
     return req;
 })
 
-// const url = 'http://localhost:5000/posts';
+// const url = 'http://localhost:5000';
 // const url = 'https://abinash-memories-app.herokuapp.com/posts';
 
 export const fetchPost = () => API.get('/posts');

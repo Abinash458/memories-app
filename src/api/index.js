@@ -11,7 +11,7 @@ API.interceptors.request.use((req) => {
 })
 
 // const url = 'http://localhost:5000';
-// const url = 'https://abinash-memories-app.herokuapp.com/posts';
+// const url = 'https://git.heroku.com/abinash-memories-app.git';
 
 export const fetchPost = () => API.get('/posts');
 export const createPost = (newPost) => API.post('/posts', newPost);
